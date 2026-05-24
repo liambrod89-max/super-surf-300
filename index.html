@@ -3,123 +3,128 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supersurf GX</title>
+<title>Supersurf</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-
 body{
-background:#0b0b10;
-color:white;
-display:flex;
-height:100vh;
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(135deg,#0f0f1a,#1b1b2e);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
 }
 
-.sidebar{
-width:70px;
-background:#11121a;
-display:flex;
-flex-direction:column;
-align-items:center;
-padding-top:20px;
-gap:20px;
-border-right:1px solid #222;
+.box{
+  width:90%;
+  max-width:600px;
+  text-align:center;
 }
 
-.dot{width:12px;height:12px;border-radius:50%;background:#ff2d75;box-shadow:0 0 10px #ff2d75;}
-.dot2{background:#00f5ff;box-shadow:0 0 10px #00f5ff;}
-.dot3{background:#a855f7;box-shadow:0 0 10px #a855f7;}
-
-.main{flex:1;display:flex;flex-direction:column;}
-
-.topbar{
-display:flex;align-items:center;padding:10px;background:#12131c;border-bottom:1px solid #222;gap:10px;}
-
-.logo{font-weight:bold;color:#00f5ff;text-shadow:0 0 10px #00f5ff;}
+.logo{
+  font-size:70px;
+  font-weight:bold;
+  margin-bottom:30px;
+}
 
 input{
-flex:1;
-padding:10px;
-border-radius:10px;
-border:none;
-background:#1b1c28;
-color:white;
-outline:none;
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  outline:none;
 }
 
 button{
-padding:10px 15px;
-border:none;
-border-radius:10px;
-background:#ff2d75;
-color:white;
-cursor:pointer;
-box-shadow:0 0 10px #ff2d75;
+  margin-top:15px;
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:30px;
+  background:#ff2d75;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 0 15px #ff2d75;
 }
 
-button:hover{transform:scale(1.05);}
-
-iframe{
-flex:1;
-width:100%;
-border:none;
+button:hover{
+  transform:scale(1.03);
 }
 
-.home{
-flex:1;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
+.small{
+  margin-top:15px;
+  font-size:12px;
+  color:#aaa;
 }
-
-.home h1{
-font-size:60px;
-color:#00f5ff;
-text-shadow:0 0 20px #00f5ff;
-}
-
-.home p{color:#aaa;}
 </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-<div class="dot"></div>
-<div class="dot dot2"></div>
-<div class="dot dot3"></div>
-</div>
+<div class="box">
 
-<div class="main">
+  <h1 class="logo">
+    <span style="color:#4285F4;">S</span>
+    <span style="color:#EA4335;">u</span>
+    <span style="color:#FBBC05;">p</span>
+    <span style="color:#34A853;">e</span>
+    <span style="color:#4285F4;">r</span>
+    <span style="color:#EA4335;">s</span>
+    <span style="color:#FBBC05;">u</span>
+    <span style="color:#34A853;">r</span>
+    <span style="color:#4285F4;">f</span>
+  </h1>
 
-<div class="topbar">
-<div class="logo">Supersurf</div>
-<input id="url" placeholder="URL oder Suche">
-<button onclick="go()">Go</button>
-</div>
+  <input id="q" placeholder="Suche oder URL eingeben">
 
-<div class="home" id="home">
-<h1>SUPERSURF</h1>
-<p>Neon Gaming Browser</p>
-</div>
+  <button onclick="go()">Suchen</button>
 
-<iframe id="frame"></iframe>
+  <div class="small">
+    Powered by Google Search
+  </div>
 
 </div>
 
 <script>
 function go(){
-let url=document.getElementById('url').value;
-if(!url)return;
-if(!url.startsWith('http'))url='https://'+url;
-document.getElementById('home').style.display='none';
-document.getElementById('frame').src=url;
+  let q = document.getElementById("q").value.trim();
+
+  if(!q) return;
+
+  let url;
+
+  // Wenn URL eingegeben wurde
+  if(q.includes(".") && !q.includes(" ")){
+    if(!q.startsWith("http")){
+      q = "https://" + q;
+    }
+
+    url = q;
+  }
+
+  // Normale Suche
+  else{
+    url =
+      "https://www.google.com/search?q="
+      + encodeURIComponent(q);
+  }
+
+  window.open(url,"_blank");
 }
 
-document.getElementById('url').addEventListener('keypress',function(e){
-if(e.key==='Enter')go();
+document
+.getElementById("q")
+.addEventListener("keydown",function(e){
+
+  if(e.key==="Enter"){
+    go();
+  }
+
 });
 </script>
 
